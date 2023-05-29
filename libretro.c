@@ -181,8 +181,8 @@ void retro_get_system_av_info(struct retro_system_av_info *info)
    info->geometry.max_width    = 330;
    info->geometry.max_height   = 410;
 #else
-   info->geometry.max_width    = 2048;
-   info->geometry.max_height   = 2048;
+   info->geometry.max_width    = HEIGHT;
+   info->geometry.max_height   = HEIGHT;
 #endif
 
    info->geometry.aspect_ratio = 33.0 / 41.0;

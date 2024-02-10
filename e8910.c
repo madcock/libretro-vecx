@@ -35,7 +35,7 @@ struct AY8910 {
 	int CountA,CountB,CountC,CountN,CountE;
 	int RNG;
 	unsigned VolA,VolB,VolC,VolE;
-	char CountEnv;
+	signed char CountEnv;
 	unsigned char EnvelopeA,EnvelopeB,EnvelopeC;
 	unsigned char OutputA,OutputB,OutputC,OutputN;
 	unsigned char Hold,Alternate,Attack,Holding;

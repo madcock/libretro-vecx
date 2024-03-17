@@ -39,7 +39,7 @@ static int16_t *psgbuf = NULL; // Buffer for raw PSG output samples
 static size_t bufpos = 0; // Keep track of the position in the PSG output buffer
 
 // Reset the Envelope step and volume depending on the currently selected shape
-static inline void vecx_psg_env_reset(void) {
+static void vecx_psg_env_reset(void) {
     psg.estep = 0; // Reset the step counter
 
     if (psg.eseg) { // Segment 1
@@ -72,8 +72,10 @@ void vecx_psg_reset_buffer(void) {
 
 // Set initial values
 void vecx_psg_init(void) {
+    int i = 0;
+
     // Registers
-    for (int i = 0; i < 16; ++i)
+    for (i = 0; i < 16; ++i)
         psg.reg[i] = 0x00;
 
     // Set the IO Register to all 1s
@@ -83,7 +85,7 @@ void vecx_psg_init(void) {
     psg.rlatch = 0x00;
 
     // Tone Periods, Tone Counters, Amplitude, Sign bits
-    for (int i = 0; i < 3; ++i) {
+    for (i = 0; i < 3; ++i) {
         psg.tperiod[i] = 0x0000;
         psg.tcounter[i] = 0x0000;
         psg.amplitude[i] = 0x00;
@@ -105,7 +107,7 @@ void vecx_psg_init(void) {
     psg.evol = 0x00;
 
     // Enable bits for Tone, Noise, and Envelope
-    for (int i = 0; i < 3; ++i) {
+    for (i = 0; i < 3; ++i) {
         psg.tdisable[i] = 0x00;
         psg.ndisable[i] = 0x00;
         psg.emode[i] = 0x00;
@@ -212,8 +214,11 @@ void vecx_psg_set_reg(uint8_t r) {
 
 // Execute a PSG cycle
 size_t vecx_psg_exec(void) {
+    int i = 0;
+    int16_t vol = 0; // Initial output volume of this sample
+
     // Clock Tone Counters for Channels A, B, and C
-    for (int i = 0; i < 3; ++i) {
+    for (i = 0; i < 3; ++i) {
         if (++psg.tcounter[i] >= psg.tperiod[i]) {
             psg.tcounter[i] = 0;
             psg.sign[i] ^= 1;
@@ -257,9 +262,7 @@ size_t vecx_psg_exec(void) {
         }
     }
 
-    int16_t vol = 0; // Initial output volume of this sample
-
-    for (int i = 0; i < 3; ++i) {
+    for (i = 0; i < 3; ++i) {
         uint8_t out = (psg.tdisable[i] | psg.sign[i]) &
             (psg.ndisable[i] | (psg.nshift & 0x01));
 

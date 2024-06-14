@@ -56,7 +56,7 @@ static float SCALEY = 1.;
 static struct retro_hw_render_callback hw_render;
 #endif
 
-#if defined(_3DS) || defined(RETROFW)
+#if defined(_3DS) || defined(RETROFW) || defined(SF2000)
 #define BUFSZ 135300
 #else
 #define BUFSZ 2164800
@@ -186,7 +186,7 @@ void retro_get_system_av_info(struct retro_system_av_info *info)
    info->timing.sample_rate    = SAMPLERATE_PSG;
    info->geometry.base_width   = 330;
    info->geometry.base_height  = 410;
-#if defined(_3DS) || defined(RETROFW)
+#if defined(_3DS) || defined(RETROFW) || defined(SF2000)
    info->geometry.max_width    = 330;
    info->geometry.max_height   = 410;
 #else

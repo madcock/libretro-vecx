@@ -62,7 +62,11 @@ static struct retro_hw_render_callback hw_render;
 #define BUFSZ 2164800
 #endif
 
+#if !defined(SF2000)
 #define SAMPLERATE_PSG 187500
+#else
+#define SAMPLERATE_PSG 22050
+#endif
 #define SIZE_ABUF 3800
 static int16_t psgbuf[SIZE_ABUF];
 static int16_t dacbuf[SIZE_ABUF];
